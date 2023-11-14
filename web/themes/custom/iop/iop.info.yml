@@ -1,0 +1,20 @@
+name: IOP Theme
+type: theme
+description: 'Basic structure of iop theme'
+core_version_requirement: ^8 || ^9 || ^10
+base theme: olivero
+version: VERSION
+
+libraries:
+  - iop/global-style
+  
+regions:
+  header: Header
+  sidemenu: Side Menu
+  hero: Hero (full width)
+  highlighted: Highlighted
+  breadcrumb: Breadcrumb
+  content: Content
+  footer: Footer
+
+
