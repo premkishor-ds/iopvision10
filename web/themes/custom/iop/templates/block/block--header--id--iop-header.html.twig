@@ -1,0 +1,28 @@
+<header id="header" role="banner" aria-label="Site header">
+  <nav id="navbar-main">
+    <a href="/" title="Home" rel="home">
+      {{ content }}
+    </a>
+    <div data-drupal-selector="search-block-form" id="block-iop-search-form-narrow" role="search">
+      <div>
+        <form action="/search/node" method="get" id="search-block-form" accept-charset="UTF-8">
+          <div>
+            <label for="edit-keys" class="visually-hidden">Search</label>
+            <input title="Enter the terms you wish to search for." data-drupal-selector="edit-keys" type="search"
+              id="edit-keys" name="keys" value="" size="15" maxlength="128">
+          </div>
+          <div data-drupal-selector="edit-actions" id="edit-actions">
+            <button data-drupal-selector="edit-submit" type="submit" id="edit-submit" value="Search">Search</button>
+          </div>
+        </form>
+      </div>
+    </div>
+    <nav role="navigation" aria-labelledby="block-usermenu-menu" id="block-usermenu">
+      <h2 class="visually-hidden" id="block-usermenu-menu">User menu</h2>
+      <div>
+        <a href="/form/submit-a-video" data-drupal-link-system-path="webform/submit_a_video">Submit a Case Report</a>
+        <a href="/user/login">Log in</a>
+      </div>
+    </nav>
+  </nav>
+</header>
