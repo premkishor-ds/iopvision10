@@ -1,0 +1,21 @@
+<header>
+  <nav>
+    {{content.field_footericons}}
+    <div data-drupal-selector="search-block-form" role="search">
+      <div class="content container-inline">
+        <form action="/search/node" method="get" id="search-block-form" accept-charset="UTF-8">
+            <input type="search" id="edit-keys" name="keys" value="" size="15" maxlength="128" >
+          <div data-drupal-selector="edit-actions" class="form-actions js-form-wrapper form-wrapper mb-3" id="edit-actions">
+            <button data-drupal-selector="edit-submit" type="submit" id="edit-submit" value="Search">Search</button>
+          </div>
+        </form>
+      </div>
+    </div>
+    <nav >
+      <div class="clearfix nav">
+        {{content.field_submit}}
+        {{content.field_login}}
+      </div>
+    </nav>
+  </nav>
+</header>
