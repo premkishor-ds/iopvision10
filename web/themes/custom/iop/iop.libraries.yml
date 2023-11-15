@@ -13,7 +13,7 @@ global-style:
       css/responsive.css: {}
       css/simple-lightbox.min.css: {}
       css/style_sheet.css: {}
- 
+
 bootstrap:
   js:
     /libraries/popper.js/dist/umd/popper.min.js: { weight: -19 }

@@ -1,21 +1,38 @@
-<header>
-  <nav>
-    {{content.field_footericons}}
-    <div data-drupal-selector="search-block-form" role="search">
-      <div class="content container-inline">
-        <form action="/search/node" method="get" id="search-block-form" accept-charset="UTF-8">
-            <input type="search" id="edit-keys" name="keys" value="" size="15" maxlength="128" >
-          <div data-drupal-selector="edit-actions" class="form-actions js-form-wrapper form-wrapper mb-3" id="edit-actions">
-            <button data-drupal-selector="edit-submit" type="submit" id="edit-submit" value="Search">Search</button>
-          </div>
-        </form>
+<div class="container">
+  <header>
+    <nav class="row">
+      <!-- Footer Icons -->
+      <div class="col-md-4">
+        {{content.field_footericons}}
       </div>
-    </div>
-    <nav >
-      <div class="clearfix nav">
-        {{content.field_submit}}
-        {{content.field_login}}
+
+      <!-- Search Form -->
+      <div class="col-md-4">
+        <div data-drupal-selector="search-block-form" role="search">
+          <div class="content container-inline">
+            <form action="/search/node" method="get" id="search-block-form" accept-charset="UTF-8">
+              <input type="search" id="edit-keys" name="keys" value="" size="15" maxlength="128">
+              <div data-drupal-selector="edit-actions" class="form-actions js-form-wrapper form-wrapper mb-3" id="edit-actions">
+                <button data-drupal-selector="edit-submit" type="submit" id="edit-submit" value="Search">Search</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+
+      <!-- Submit and Login Links -->
+      <div class="col-md-4">
+        <nav>
+          <div class="row">
+            <div class="col-md-6">
+              {{content.field_submit}}
+            </div>
+            <div class="col-md-6">
+              {{content.field_login}}
+            </div>
+          </div>
+        </nav>
       </div>
     </nav>
-  </nav>
-</header>
+  </header>
+</div>

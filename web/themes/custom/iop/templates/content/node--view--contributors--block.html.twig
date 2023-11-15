@@ -1,17 +1,15 @@
-<div>
-    <div>
-        <div>
-           {{ content.field_image }}
-        </div>
-        <div><span><a href={{ url }} hreflang="en">{{ label }}</a></span></div>
-        <div>
-            <div>{{ content.field_title }}</div>
-        </div>
-        <div>
-            <div>
-                <p>{{ content.body }}</p>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                {{ content.field_image }}
+            </div>
+            <div class="col-md-6">
+                <span><a href={{ url }} hreflang="en">{{ label }}</a></span>
+                <div>{{ content.field_title }}</div>
+                <div>
+                    <p>{{ content.body }}</p>
+                </div>
+                <span><a href={{ url }} hreflang="en">Read more</a></span>
             </div>
         </div>
-        <div><span><a href={{ url }} hreflang="en">Read more</a></span></div>
     </div>
-</div>
