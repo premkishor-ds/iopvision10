@@ -15,6 +15,7 @@ regions:
   highlighted: Highlighted
   breadcrumb: Breadcrumb
   content: Content
+  footertop: Footer Top
   footer: Footer
 
 

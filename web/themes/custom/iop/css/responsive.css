@@ -1,0 +1,87 @@
+
+
+
+@media (max-width:1249px){
+ 
+.navbar_main ul.navbar-nav li { padding: 2px 5px 12px 5px; }
+
+
+
+}
+
+
+
+@media (max-width:1199px){
+
+.header-inner .logo {max-width: 233px;margin-left: 68px;}
+
+.navbar_main .navbar-expand-lg .navbar-toggler{display:inline-block;position: absolute;left: 14px;top: -16px;}
+.navbar_main .navbar-collapse.collapsing,
+.navbar_main .navbar-collapse.collapse {padding: 0px;display:none !important;height: auto;width: 100%;position: absolute;left: 0;z-index: 9;background: #0c1051;top: 47px;right: 0; }
+
+.navbar_main .navbar-collapse.collapsing,
+.navbar_main .navbar-collapse.collapse.show{overflow: inherit;transition: inherit !important; display:inline-block !important;}
+
+.navbar_main .navbar-collapse.collapse.collapsing .navbar-nav,
+.navbar_main .navbar-collapse.collapse .navbar-nav{ padding: 26px 0; }
+
+.navbar_main .navbar-collapse.collapse.collapsing .navbar-nav li,
+.navbar_main .navbar-collapse.collapse .navbar-nav li{display: block !important;text-align: left;float: left;width: 100%;}
+.navbar_main .navbar-collapse.collapse .navbar-nav li a{color: #FFF; padding: 0 0 0 19px;}
+.navbar_main .navbar-collapse.collapse .navbar-nav li a:hover{color: #ffb400;}
+.navbar-expand-lg .navbar-nav .dropdown-menu { background: #ffb400; position: static; padding-left: 13px; height: auto;  width: 100%; }
+.navbar-expand-lg .navbar-nav .dropdown-menu:after { content: ''; display: inline-block; width: 100%; }
+.navbar-expand-lg .navbar-nav .dropdown-menu li a{color: #FFF;}
+.navbar-expand-lg .navbar-nav .dropdown-menu li a:hover{color: #0c1051 !important;}
+ 
+.navbar_main ul.navbar-nav li a:before{opacity:0;}
+
+.header-inner .navbar_main {text-align: center;max-width: 100%;left: 0;right: 0;position: absolute;}
+
+.business-advice .content .block { width: 222px; }
+
+.slide_bg .control .stap { left: 30px;  }
+.slide_bg .control .stap h1 { font-size: 20px; }
+.slide_bg .control .stap h2 { font-size: 30px; margin-top: 20px; }
+.slide_bg .control .stap p { padding-top: 8px; font-size: 13px; }
+
+
+}
+
+
+@media (max-width:991px){
+
+.testimonial-bg .msg{display:none;}
+.testimonial-bg .head { padding: 0 0 30px 0; }
+
+.our-brands .brand_logo li img { width: 90%; }
+
+.footer_bg .f_link h3 br{display:none;}
+.footer_bg:after{    background-size: contain;}
+
+
+}
+
+@media (max-width:767px){
+
+
+.footer_bg .f_link.follow_us h4 { text-align: left; }
+.footer_bg .f_link .follow_us { text-align: left; }
+
+
+.bottom-bar { display: inherit; width: 100%;text-align: center; }
+.bottom-bar .ds-block { margin-top: 9px; }
+
+
+}
+
+
+
+
+
+
+
+
+
+
+

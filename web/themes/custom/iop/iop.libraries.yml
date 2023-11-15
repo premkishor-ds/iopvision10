@@ -1,29 +1,18 @@
 global-style:
   version: VERSION
   js:
-    js/doubletapgo.js: {}
-    js/froogaloop2.min.js: {}
-    js/function.js: {}
-    js/function.min.js: {}
-    js/libs.js: {}
-    js/menu_fix.js: {}
-    js/modernizr-custom.min.js: {}
-    js/modernizr.touch.js: {}
-  scss:
-    component:
-      scss/_clear.scss: {}
-      scss/_colours.scss: {}
-      scss/_drupal.scss: {}
-      scss/_forms.scss: {}
-      scss/_mixins.scss: {}
-      scss/_reset.scss: {}
-      scss/_typography.scss: {}
-      scss/style.scss: {}
+    js/bootstrap.js: {}
+    js/bootstrap.min.js: {}
+    js/jquery.min.js: {}
+    js/owl.carousel.js: {}
+    js/simple-lightbox.jquery.min.js: {}
   css:
     component:
-      css/style.css.map: {}
-      css/style.min.css: {}
-      css/style.min.css.map: {}
+      css/bootstrap.min.css: {}
+      css/owl.carousel.min.css: {}
+      css/responsive.css: {}
+      css/simple-lightbox.min.css: {}
+      css/style_sheet.css: {}
  
 bootstrap:
   js:
