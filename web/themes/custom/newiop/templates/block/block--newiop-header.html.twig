@@ -1,0 +1,47 @@
+<header id="header" class="header" role="banner" aria-label="Site header">
+    <nav class="navbar navbar-expand-lg" id="navbar-main">
+    {{content.field_footericons}}
+        <div class="search-block-form block block-search block-search-form-block"
+            data-drupal-selector="search-block-form" id="block-iop-search-form-narrow" role="search">
+            <div class="content container-inline">
+                <div class="content container-inline">
+                    <form action="/search/node" method="get" id="search-block-form" accept-charset="UTF-8"
+                        class="search-form search-block-form form-row">
+                        <div
+                            class="js-form-item js-form-type-search form-type-search js-form-item-keys form-item-keys form-no-label mb-3">
+                            <label for="edit-keys" class="visually-hidden">Search</label>
+                            <input title="Enter the terms you wish to search for." data-drupal-selector="edit-keys"
+                                type="search" id="edit-keys" name="keys" value="" size="15" maxlength="128"
+                                class="form-search form-control">
+
+                        </div>
+                        <div data-drupal-selector="edit-actions" class="form-actions js-form-wrapper form-wrapper mb-3"
+                            id="edit-actions"><button data-drupal-selector="edit-submit" type="submit" id="edit-submit"
+                                value="Search" class="button js-form-submit form-submit btn btn-primary">Search</button>
+                        </div>
+
+                    </form>
+
+                </div>
+
+            </div>
+        </div>
+        <nav role="navigation" aria-labelledby="block-usermenu-menu" id="block-usermenu"
+            class="block block-menu navigation menu--account">
+            <h2 class="visually-hidden" id="block-usermenu-menu">User menu</h2>
+            <div class="clearfix nav">
+            {% if content.field_submit %}
+                {% set submitUrl = content.field_submit.0['#url'] %}
+                {% set submitLabel = content.field_submit.0['#title'] %}
+                <a href="{{ submitUrl }}" class="nav-link nav-link--form-submit-a-video">{{ submitLabel }}</a>
+            {% endif %}
+            {% if content.field_login %}
+                {% set submitUrl = content.field_login.0['#url'] %}
+                {% set submitLabel = content.field_login.0['#title'] %}
+                <a href="{{ submitUrl }}" class="nav-link nav-link--user-login">{{ submitLabel }}</a>
+            {% endif %}
+            </div>
+        </nav>
+        </div>
+    </nav>
+</header>

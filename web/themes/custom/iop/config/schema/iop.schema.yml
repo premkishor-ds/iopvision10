@@ -1,0 +1,5 @@
+# Schema for the configuration files of the Bootstrap Barrio Subtheme.
+
+iop.settings:
+  type: bootstrap_barrio.settings
+  label: 'Iop themes settings'

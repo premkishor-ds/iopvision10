@@ -1,0 +1,71 @@
+<div class="img-with-content">
+    <div class="container">
+        <section class="row region region-photo-of-the-week">
+            <div class="views-element-container block block-views block-views-blockophthalmology-case-reports-block-1"
+                id="block-views-block-ophthalmology-case-reports-block-1">
+                <div class="container">
+                    <div class="content">
+                        <div>
+                            <div
+                                class="view view-ophthalmology-case-reports view-id-ophthalmology_case_reports view-display-id-block_1 js-view-dom-id-e67d633a633488fd54441e9ea991bd400253832dd6b26f33e0d1f1528caf901c">
+                                <div class="view-header">
+                                    <div
+                                        class="clearfix text-formatted field field--name-body field--type-text-with-summary field--label-hidden field__item">
+                                        <div class="titles-view">
+                                            <h2><strong>{{content.field_image_title}}</h2>
+                                            <div class="view-all view-header">
+                                                {% if content.field_view_all %}
+                                                {% set viewallUrl = content.field_view_all.0['#url'] %}
+                                                {% set viewallLabel = content.field_view_all.0['#title'] %}
+                                                <a href="{{ viewallUrl }}" class="button grey"  title="Read more">{{ viewallLabel }}</a>
+                                                {% endif %}
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="view-content row">
+                                        <div class="views-row">
+                                            <div class="views-field views-field-field-video-thumb">
+                                                <div class="field-content">
+                                                    {{content.field_about_usimage}}
+                                                </div>
+                                            </div>
+                                            <div class="views-field views-field-body">
+                                                <span class="field-content">
+                                                    {{content.field_body_description}}
+                                                </span>
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <section class="row region region-about-iop">
+            <div id="block-aboutiop"
+                class="block block-block-content block-block-content80b16b29-5bb6-4f83-8eb4-f8254b8d67c3">
+                <div class="container">
+                    <h2>{{content.field_body_title}}</h2>
+                    <div class="content">
+                        <div class="clearfix text-formatted field field--name-body field--type-text-with-summary field--label-hidden field__item">
+                            {{content.body}}
+                        {% if content.field_read_more %}
+                        {% set readmoreUrl = content.field_read_more.0['#url'] %}
+                        {% set readmmoreLabel = content.field_read_more.0['#title'] %}
+                        <a href="{{ readmoreUrl }}" class="button grey"  title="Read more">{{ readmmoreLabel }}</a>
+                        {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+</div>

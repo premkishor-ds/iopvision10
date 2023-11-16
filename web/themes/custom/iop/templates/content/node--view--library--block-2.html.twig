@@ -1,12 +1,12 @@
-<div>
+
+<div class="col-md-4">
+    <div class="thumbimage aspect-ratio-1x1">
+        {{ content.field_video_thumb }}
+    </div>
+    <div><span><a href="{{ url }}" hreflang="en">{{ label }}</a></span></div>
     <div>
-        <div>
-           {{ content.field_video_thumb }}
-        </div>
-        <div><span><a href={{ url }} hreflang="en">{{ label }}</a></span></div>
-        {# <div>
-            <div>{{ content.field_contributor }}</div>
-        </div>
-        <div>{{content.field_video}}</div> #}
+        <div>{{ content.field_contributor }}</div>
     </div>
 </div>
+
+

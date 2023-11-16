@@ -1,0 +1,26 @@
+<div class="navbar-collapse justify-content-end" id="CollapsingNavbar">
+    <nav role="navigation" aria-labelledby="block-iop-main-menu-menu" id="block-iop-main-menu"
+        class="block block-menu navigation menu--main">
+        {% if items %}
+        <ul class="clearfix nav navbar-nav">
+            {% for item in items %}
+            <li class="nav-item menu-item--expanded dropdown">
+                <a href="{{ item.url }}" class="nav-link dropdown-toggle nav-link--library" data-bs-toggle="dropdown"
+                    aria-expanded="false" aria-haspopup="true" data-drupal-link-system-path="library">{{ item.title
+                    }}</a>
+                {% if item.below %}
+                <ul class="dropdown-menu" {{ item.below.attributes }}>
+                    {% for subitem in item.below %}
+                    <li class="dropdown-item">
+                        <a href="{{ subitem.url }}" class="nav-link--library-topics" {{ subitem.link_attributes }}>{{
+                            subitem.title }}</a>
+                    </li>
+                    {% endfor %}
+                </ul>
+                {% endif %}
+            </li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+    </nav>
+</div>

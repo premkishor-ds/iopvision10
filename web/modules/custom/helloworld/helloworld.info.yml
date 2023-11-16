@@ -1,0 +1,4 @@
+name: Hello world
+type: module
+description: hello world modules
+core_version_requirement: ^8 || ^9 || ^10

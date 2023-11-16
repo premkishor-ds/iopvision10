@@ -1,0 +1,253 @@
+<?php
+
+/**
+ * @file
+ * Functions to support theming in the SASS Starterkit subtheme.
+ */
+require 'assets/php/vimeo/autoload.php';
+
+use Vimeo\Vimeo;
+use Drupal\Core\Template\Attribute;
+use Drupal\Core\Form\FormStateInterface;
+use Symfony\Component\HttpFoundation\RedirectResponse;
+use Drupal\Core\Url;
+
+/**
+ * Implements hook_form_system_theme_settings_alter() for settings form.
+ *
+ * Replace Barrio setting options with subtheme ones.
+ *
+ * Example on how to alter theme settings form
+ */
+function iop_form_system_theme_settings_alter(&$form, FormStateInterface $form_state)
+{
+  $form['components']['navbar']['bootstrap_barrio_navbar_top_background']['#options'] = [
+    'bg-primary' => t('Primary'),
+    'bg-secondary' => t('Secondary'),
+    'bg-light' => t('Light'),
+    'bg-dark' => t('Dark'),
+    'bg-white' => t('White'),
+    'bg-transparent' => t('Transparent'),
+  ];
+  $form['components']['navbar']['bootstrap_barrio_navbar_background']['#options'] = [
+    'bg-primary' => t('Primary'),
+    'bg-secondary' => t('Secondary'),
+    'bg-light' => t('Light'),
+    'bg-dark' => t('Dark'),
+    'bg-white' => t('White'),
+    'bg-transparent' => t('Transparent'),
+  ];
+}
+/**
+ * Implements hook_preprocess_page() for page.html.twig.
+ */
+
+/**
+ * Get video thumbnail from Vimeo.
+ */
+function get_video_thumbnail($video_id, $size, $content = array())
+{
+  if (!empty($content) && isset($content->field_video_thumb['und']) && $content->field_video_thumb['und'][0]['uri'] != '') {
+    $thumbnail = image_style_url('vimeo_' . $size, $content->field_video_thumb['und'][0]['uri']);
+  } else {
+    $client_id = 'de67c6c3ad35ef9fcc603c1fe9f6660a5ee6f4fe';
+    $client_secret = '32a75951037d014eb538ef7e7e9a859c39080798';
+    $access_token = 'e1672a2666d32810e7fce557e852d280';
+
+    $thumbnail_size = '295x166';
+    if ($size === 'medium') {
+
+      $thumbnail_size = '640x400';
+    } elseif ($size === 'large') {
+
+      $thumbnail_size = '960x600';
+    }
+    $request = curl_init();
+    $timeOut = 0;
+    curl_setopt($request, CURLOPT_URL, "https://vimeo.com/api/v2/video/" . $video_id . ".php");
+    curl_setopt($request, CURLOPT_RETURNTRANSFER, 1);
+    curl_setopt($request, CURLOPT_USERAGENT, "Mozilla/4.0 (compatible; MSIE 8.0; Windows NT 6.1)");
+    curl_setopt($request, CURLOPT_CONNECTTIMEOUT, $timeOut);
+    $data = curl_exec($request);
+    curl_close($request);
+    $hash = unserialize($data);
+
+    if (!$hash) {
+      $vimeo = new Vimeo($client_id, $client_secret, $access_token);
+      $response = $vimeo->request('/videos/' . $video_id . '/pictures', 'GET');
+      $thumbnail = 'https://i.vimeocdn.com/video/' . str_replace('/videos/' . $video_id . '/pictures/', '', $response['body']['data'][0]['uri']) . '_' . $thumbnail_size . '.jpg';
+    } else {
+      preg_match('/video\/(.*?)_640/', $hash[0]['thumbnail_large'], $match);
+      $thumbnail = 'https://i.vimeocdn.com/video/' . $match[1] . '_' . $thumbnail_size . '.jpg';
+    }
+
+    $thumbnail_file = str_replace($thumbnail_size, '960x600', $thumbnail);
+    $image = @file_get_contents($thumbnail_file); // string
+    $file = file_save_data($image, 'public://' . $video_id . '_thumb.jpg', FILE_EXISTS_REPLACE);
+    $content->field_video_thumb['und'][0]['fid'] = $file->fid;
+    field_attach_update('node', $content);
+  }
+  return $thumbnail;
+}
+
+function iop_preprocess_field(array &$variables, $hook)
+{
+  if ($variables['field_name'] == 'field_contributor') {
+    $variables['nid'] = $variables['element']['#object']->id();
+  }
+}
+
+
+function iop_preprocess_node(&$variables)
+{
+  // used to Checking sidebar
+  $variables['is_front'] = \Drupal::service('path.matcher')->isFrontPage();
+
+  // Define the node.
+  $node = \Drupal::routeMatch()->getParameter('node');
+  // Check for a node.
+  if ($node instanceof \Drupal\node\NodeInterface) {
+    // Define the nid.
+    $nid = $node->id();
+    $type = $node->bundle();
+
+    if ($type == 'video') {
+      // current user role
+      $currentuserId = \Drupal::currentUser()->id();
+      $currentuserRoles = \Drupal::currentUser()->getRoles();
+
+      $orderProduct = [];
+      if (in_array('authenticated', $currentuserRoles)) {
+        // load current user product purchase list
+        $orders = \Drupal::entityTypeManager()->getStorage('commerce_order')->loadByProperties(['uid' => \Drupal::currentUser()->id()]);
+        foreach ($orders as $key => $value) {
+          foreach ($value->getItems() as $order_item) {
+            $orderProduct[] = $order_item->getPurchasedEntity()->id();
+          }
+        }
+      }
+
+      //load current node to get vimo video code
+      $loadnode = \Drupal::entityTypeManager()->getStorage('node')->load($nid);
+      $fullvideo = $loadnode->get('field_video')->value;
+      $traservideo = $loadnode->get('field_video_teaser')->value;
+      $videotag = $loadnode->get('field_tags')->target_id;
+      $nodeproduct = $loadnode->get('field_product')->target_id;
+
+      // Get current node product variation_id 
+      $variation_id = \Drupal\commerce_product\Entity\Product::load($nodeproduct);
+    $variation_id = 0; // Default variation ID
+
+      if (!empty($nodeproduct)) {
+        $product = \Drupal\commerce_product\Entity\Product::load($nodeproduct);
+        if ($product) {
+          $variations = $product->getVariations();
+          if (!empty($variations)) {
+            $variation_id = $variations[0]->id();
+          }
+        }
+      }
+    
+
+      // Featured Videos is checked
+      $isFeaturedVideo = (in_array('customer', $currentuserRoles) 
+      || in_array('administrator', $currentuserRoles) 
+      || in_array($variation_id, $orderProduct)) 
+      && $videotag == '292' 
+      && $videotag == '293';
+
+      // Remove subscription section on video page for customers
+      $subscriberUser = in_array('customer', $currentuserRoles) ? 'subscriber' : 'nosubscriber';
+
+      // Remove paid option if video is free
+      if ($videotag == '291') {
+        $subscriberUser = 'subscriber';
+      }
+
+      // Remove particular product section and "Buy" label for current user
+      $purchaseCurrentProduct = in_array($variation_id, $orderProduct) ? 'yes' : 'no';
+
+      // Assign variables to the template
+      $variables['subscriberUser'] = $subscriberUser;
+      $variables['purchaseCurrentProduct'] = $purchaseCurrentProduct;
+
+      // Assign featured video to the current user
+      // if video is free the 291 tag works
+      if ($isFeaturedVideo || $videotag == '291') {
+        $VideoForCurrentUser = $fullvideo;
+      } else {
+        $VideoForCurrentUser = $traservideo;
+      }
+
+      // dump($freevideo , 'freevideo');
+      // dump($fullvideo , 'fullvideo');
+      // dump($traservideo , 'traservideo');
+      // dump($videotag , 'videotag');
+      // dump($variation_id , 'variation_id');
+      // dump($orderProduct , 'orderProduct');
+      // dump($isFeaturedVideo , 'isFeaturedVideo');
+      // dump($subscriberUser , 'subscriberUser');
+      // dump($purchaseCurrentProduct , 'purchaseCurrentProduct');
+      // dump($VideoForCurrentUser , 'videoForCurrentUser');
+      // die();
+
+      $variables['VideoForCurrentUser'] = $VideoForCurrentUser;
+
+      $_SESSION['iopPaymentReturnUrl'][$currentuserId]['nid'] = $nid;
+
+      // Load licenses associated with the current user.
+      $license_ids = \Drupal::entityQuery('commerce_license')
+        ->condition('uid', $currentuserId)
+        ->accessCheck(FALSE)
+        ->condition('state', 'active')
+        ->execute();
+
+      // Loop through each license and do something with it.
+      foreach ($license_ids as $license) {
+        $l = \Drupal::entityTypeManager()->getStorage('commerce_license')->load($license);
+        $role = $l->get('license_role')->getValue()[0]['target_id'];
+        if ($role == 'buyer') {
+          $l->set('state', 'expired');
+          $l->save();
+        }
+      }
+    }
+  }
+}
+
+
+// Bredcrumpts add title
+function iop_preprocess_breadcrumb(&$variables)
+{
+  if ($variables['breadcrumb']) {
+    $request = \Drupal::request();
+    $route_match = \Drupal::routeMatch();
+    $page_title = \Drupal::service('title_resolver')->getTitle($request, $route_match->getRouteObject());
+
+    if (!empty($page_title)) {
+      $variables['breadcrumb'][] = [
+        'text' => $page_title,
+        'attributes' => new Attribute(['class' => ['active']])
+      ];
+    }
+  }
+}
+
+function iop_form_alter(&$form, \Drupal\Core\Form\FormStateInterface $form_state, $form_id)
+{
+
+  if ($form_id == 'commerce_checkout_flow_multistep_default') {
+    $currentuserId = \Drupal::currentUser()->id();
+    $node_id = $_SESSION['iopPaymentReturnUrl'][$currentuserId]['nid'];
+    $host = \Drupal::request()->getSchemeAndHttpHost();
+    $alias = \Drupal::service('path_alias.manager')->getAliasByPath('/node/' . $node_id);
+    $form['#return_url'] = !isset($node_id) ? $host . '/user/' . $currentuserId . '/orders' : $host . $alias;
+    $current_path = \Drupal::service('path.current')->getPath();
+    $current_path = explode('/', $current_path);
+    if ($current_path[1] == 'checkout' && $current_path[3] == 'complete') {
+      $response = new RedirectResponse($form['#return_url']);
+      $response->send();
+      unset($_SESSION['iopPaymentReturnUrl']);
+    }
+  }
+}
